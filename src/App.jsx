@@ -13,13 +13,15 @@ const getUserFromServer = () => ({
 });
 
 function App() {
-	const { name, age, email, phone } = getUserFromServer();
+	const userData = getUserFromServer();
 	return (
-		<>
-			<Header currentUser={name} />
-			<hr />
-			<UserBlock name={name} age={age} email={email} phone={phone} />
-		</>
+		<AppContext value={userData}>
+			<>
+				<Header />
+				<hr />
+				<UserBlock />
+			</>
+		</AppContext>
 	);
 }
 
