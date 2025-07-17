@@ -1,6 +1,6 @@
 // import viteLogo from '/vite.svg'
 import './App.module.css';
-import { useState, useEffect } from 'react';
+import { useEffect, useReducer } from 'react';
 import { Header } from './components/header/header';
 import { UserBlock } from './components/user-block/user-block';
 import { AppContext } from './context';
@@ -41,24 +41,18 @@ const reducer = (state, action) => {
 };
 
 function App() {
-	const [userData, setUserData] = useState({});
-
-	const dispatch = (action) => {
-		const newState = reducer(userData, action);
-
-		setUserData(newState);
-	};
+	const [userData, dispatch] = useReducer(reducer, {});
 
 	useEffect(() => {
 		const userDataFromServer = getUserFromServer();
 
-		setUserData(userDataFromServer);
+		dispatch({ type: 'SET_USER_DATA', payload: userDataFromServer });
 	}, []);
 
 	const onUserChange = () => {
 		const anotherUserDataFromServer = getAnotherUserFromServer();
 
-		setUserData(anotherUserDataFromServer);
+		dispatch({ type: 'SET_USER_DATA', payload: anotherUserDataFromServer });
 	};
 
 	return (
