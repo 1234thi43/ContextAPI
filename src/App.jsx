@@ -22,31 +22,31 @@ const getAnotherUserFromServer = () => ({
 	phone: 2283371,
 });
 
+const reducer = (state, action) => {
+	const { type, payload } = action;
+
+	switch (type) {
+		case 'SET_USER_DATA': {
+			return payload;
+		}
+		case 'SET_USER_AGE': {
+			return {
+				...state,
+				age: payload,
+			};
+		}
+		default:
+			return state;
+	}
+};
+
 function App() {
 	const [userData, setUserData] = useState({});
 
-	// const reducer = (state, action) => {
-
-	// }
-
 	const dispatch = (action) => {
-		const { type, payload } = action;
+		const newState = reducer(userData, action);
 
-		switch (type) {
-			case 'SET_USER_DATA': {
-				setUserData(payload);
-				break;
-			}
-			case 'SET_USER_AGE': {
-				setUserData({
-					...userData,
-					age: payload,
-				});
-				break;
-			}
-			default:
-			// nothing
-		}
+		setUserData(newState);
 	};
 
 	useEffect(() => {
