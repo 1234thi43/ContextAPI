@@ -25,6 +25,30 @@ const getAnotherUserFromServer = () => ({
 function App() {
 	const [userData, setUserData] = useState({});
 
+	// const reducer = (state, action) => {
+
+	// }
+
+	const dispatch = (action) => {
+		const { type, payload } = action;
+
+		switch (type) {
+			case 'SET_USER_DATA': {
+				setUserData(payload);
+				break;
+			}
+			case 'SET_USER_AGE': {
+				setUserData({
+					...userData,
+					age: payload,
+				});
+				break;
+			}
+			default:
+			// nothing
+		}
+	};
+
 	useEffect(() => {
 		const userDataFromServer = getUserFromServer();
 
@@ -38,7 +62,7 @@ function App() {
 	};
 
 	return (
-		<AppContext value={userData}>
+		<AppContext value={{ userData, dispatch }}>
 			<>
 				<Header />
 				<hr />
